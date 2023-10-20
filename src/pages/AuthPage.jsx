@@ -86,7 +86,7 @@ function AuthPage() {
         />
         <button onClick={login}>Log-in</button>
       </div>
-      Hello,{user.email.split("@")[0]}&nbsp;
+      Hello,{user && user.email ? user.email.split("@")[0] : "Guest"}&nbsp;
       <button onClick={logout}>Sign Out</button>
     </div>
   );
