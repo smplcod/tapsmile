@@ -9,5 +9,6 @@
 	"signInWithGoogle": "Войти при помощи Google",
 	"email": "E-mail",
 	"password": "Пароль",
-	"hello": "Привет"
+	"hello": "Привет",
+	"youAreReadyToPolls": "Вы готовы к опросам"
 }

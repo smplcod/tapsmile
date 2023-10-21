@@ -29,17 +29,19 @@ i18n.use(initReactI18next).init({
 
 function App() {
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      setIsLoading(false);
     });
   }, []);
 
   return (
     <>
       <LanguageSwitcher />
-      <Router user={user} />
+      <Router user={user} isLoading={isLoading} />
     </>
   );
 }

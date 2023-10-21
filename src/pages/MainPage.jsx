@@ -3,22 +3,24 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import UserGreeting from "../components/UserGreeting";
 
-function MainPage({ user }) {
+function MainPage({ user, isLoading }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user) {
-      navigate("/auth");
+    if (!isLoading) {
+      if (!user) {
+        navigate("/auth");
+      }
     }
-  }, [user, navigate]);
+  }, [user, isLoading, navigate]);
 
   return (
     <>
       <h1>{t("instantVoting")}</h1>
       <p>{t("thisService")}</p>
-      <div>Вы готовы к опросам</div>
-      <UserGreeting />
+      <p>{t("youAreReadyToPolls")}</p>
+      {/* <UserGreeting /> */}
     </>
   );
 }
