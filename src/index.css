@@ -8,3 +8,10 @@ body {
     sans-serif;
 }
 
+button {
+  height: 26px;
+  padding: 0 3px 0 3px;
+}
+input {
+  height: 22px;
+}

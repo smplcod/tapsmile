@@ -3,12 +3,12 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MainPage from "./pages/MainPage";
 import AuthPage from "./pages/AuthPage";
 
-function Router() {
+function Router({ user }) {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/geting-started" element={<AuthPage />} />
+        <Route path="/" element={<MainPage user={user} />} />
+        <Route path="/auth" element={<AuthPage />} />
       </Routes>
     </BrowserRouter>
   );

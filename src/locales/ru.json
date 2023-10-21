@@ -1,0 +1,13 @@
+{
+  "instantVoting": "Моментальное голосование",
+  "thisService": "Этот сервис позволяет моментально",
+  "begin": "Начать",
+	"or": "или",
+	"signIn": "Войти",
+	"signUp": "Зарегистироваться",
+	"logOut": "Выйти",
+	"signInWithGoogle": "Войти при помощи Google",
+	"email": "E-mail",
+	"password": "Пароль",
+	"hello": "Привет"
+}

@@ -1,0 +1,13 @@
+{
+  "instantVoting": "Instant Voting",
+  "thisService": "This service allows for instant",
+  "begin": "Begin",
+	"or": "or",
+	"signIn": "Sign In",
+	"signUp": "Sign Up",
+	"logOut": "Log Out",
+	"signInWithGoogle": "Sign In With Google",
+	"email": "E-mail",
+	"password": "Password",
+	"hello": "Hello"
+}

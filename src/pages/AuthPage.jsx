@@ -1,34 +1,51 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
 } from "firebase/auth";
-import { auth } from "../helpers/FirebaseConfig";
+import { auth, signInWithGoogle } from "../helpers/FirebaseConfig";
+
+import { useTranslation } from "react-i18next";
+import UserGreeting from "../components/UserGreeting";
 
 function AuthPage() {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
-
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [profileImage, setProfileImage] = useState(null);
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      setIsLoading(false);
     });
   }, []);
 
+  useEffect(() => {
+    const storedImage = localStorage.getItem("image");
+    if (storedImage) {
+      setProfileImage(storedImage);
+    }
+  }, [user]);
+
   const register = async () => {
     try {
-      const user = await createUserWithEmailAndPassword(
+      await createUserWithEmailAndPassword(
         auth,
         registerEmail,
         registerPassword
       );
-      console.log(user);
+      navigate("/");
     } catch (error) {
       console.log(error.message);
     }
@@ -36,12 +53,8 @@ function AuthPage() {
 
   const login = async () => {
     try {
-      const user = await signInWithEmailAndPassword(
-        auth,
-        loginEmail,
-        loginPassword
-      );
-      console.log(user);
+      await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
+      navigate("/");
     } catch (error) {
       console.log(error.message);
     }
@@ -49,45 +62,57 @@ function AuthPage() {
 
   const logout = async () => {
     await signOut(auth);
+    localStorage.removeItem("name");
+    localStorage.removeItem("email");
+    localStorage.removeItem("image");
+    setProfileImage(null);
   };
 
   return (
     <div className="App">
-      <div>
-        <h2>My</h2>
-        <h3>Registration</h3>
-        <input
-          placeholder="Email..."
-          onChange={(e) => {
-            setRegisterEmail(e.target.value);
-          }}
-        />
-        <input
-          placeholder="Password..."
-          onChange={(e) => {
-            setRegisterPassword(e.target.value);
-          }}
-        />
-        <button onClick={register}>Register</button>
-      </div>
-      <div>
-        <h3>Login</h3>
-        <input
-          placeholder="Email..."
-          onChange={(e) => {
-            setLoginEmail(e.target.value);
-          }}
-        />
-        <input
-          placeholder="Password..."
-          onChange={(e) => {
-            setLoginPassword(e.target.value);
-          }}
-        />
-        <button onClick={login}>Log-in</button>
-      </div>
-      Hello,{user && user.email ? user.email.split("@")[0] : "Guest"}&nbsp;
-      <button onClick={logout}>Sign Out</button>
+      {!isLoading ? (
+        !user ? (
+          <>
+            <div>
+              <input
+                placeholder={t("email")}
+                onChange={(e) => setLoginEmail(e.target.value)}
+              />
+              <input
+                placeholder={t("password")}
+                onChange={(e) => setLoginPassword(e.target.value)}
+              />
+              <button onClick={login}>{t("signIn")}</button>
+            </div>
+            {t("or")}
+            <div>
+              <input
+                placeholder={t("email")}
+                onChange={(e) => setRegisterEmail(e.target.value)}
+              />
+              <input
+                placeholder={t("password")}
+                onChange={(e) => setRegisterPassword(e.target.value)}
+              />
+              <button onClick={register}>{t("signUp")}</button>
+            </div>
+            {t("or")}
+            <div>
+              <button onClick={() => signInWithGoogle(navigate)}>
+                {t("signInWithGoogle")}
+              </button>
+            </div>
+          </>
+        ) : (
+          <UserGreeting
+            user={user}
+            logout={logout}
+            profileImage={profileImage}
+          />
+        )
+      ) : (
+        <>Loading...</>
+      )}
     </div>
   );
 }
