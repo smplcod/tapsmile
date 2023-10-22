@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import {
   createUserWithEmailAndPassword,
@@ -9,8 +10,10 @@ import {
 } from "firebase/auth";
 import { auth, signInWithGoogle } from "../helpers/FirebaseConfig";
 
-import { useTranslation } from "react-i18next";
 import UserGreeting from "../components/UserGreeting";
+
+import "../components/GoogleButton.class.css";
+import GoogleButton from "../components/GoogleButton";
 
 function AuthPage() {
   const { t } = useTranslation();
@@ -98,9 +101,10 @@ function AuthPage() {
             </div>
             {t("or")}
             <div>
-              <button onClick={() => signInWithGoogle(navigate)}>
-                {t("signInWithGoogle")}
-              </button>
+              <GoogleButton
+                signInWithGoogle={signInWithGoogle}
+                navigate={navigate}
+              />
             </div>
           </>
         ) : (
