@@ -1,4 +1,13 @@
 {
+	"instalation": "Installation",
+  "creatingInitialCollections": "Creating initial collections...",
+  "creatingInitialCollectionsDone": "Initial collections created.",
+  "creatingPolls": "Creating polls...",
+  "creatingPollsDone": "Polls created.",
+  "creatingUserVotes": "Creating user votes...",
+  "creatingUserVotesDone": "User votes created.",
+  "creatingAllStartedDataDone": "All starting data created.",
+  "goToMainpage": "Go to the main page",
   "instantVoting": "Instant Voting",
   "thisService": "This service allows for instant",
   "begin": "Begin",

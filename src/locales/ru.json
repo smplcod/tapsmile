@@ -1,4 +1,13 @@
 {
+	"instalation": "Установка",
+  "creatingInitialCollections": "Создание начальных коллекций...",
+  "creatingInitialCollectionsDone": "Начальные коллекции созданы.",
+  "creatingPolls": "Создание опросов...",
+  "creatingPollsDone": "Опросы созданы.",
+  "creatingUserVotes": "Создание голосов пользователей...",
+  "creatingUserVotesDone": "Голоса пользователей созданы.",
+  "creatingAllStartedDataDone": "Все начальные данные созданы.",
+  "goToMainpage": "Перейти на главную страницу",
   "instantVoting": "Моментальное голосование",
   "thisService": "Этот сервис позволяет моментально",
   "begin": "Начать",

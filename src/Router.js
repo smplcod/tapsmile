@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MainPage from "./pages/MainPage";
 import AuthPage from "./pages/AuthPage";
+import InstallPage from "./pages/InstallPage";
 
 function Router({ user, isLoading }) {
   return (
@@ -12,6 +13,7 @@ function Router({ user, isLoading }) {
           element={<MainPage user={user} isLoading={isLoading} />}
         />
         <Route path="/auth" element={<AuthPage />} />
+        <Route path="/install" element={<InstallPage />} />
       </Routes>
     </BrowserRouter>
   );
