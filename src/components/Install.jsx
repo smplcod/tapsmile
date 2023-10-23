@@ -60,8 +60,10 @@ const Install = () => {
       {stage >= 2 && <p>{t("creatingInitialCollectionsDone")}</p>}
       {stage >= 3 && <p>{t("creatingPolls")}</p>}
       {stage >= 4 && <p>{t("creatingPollsDone")}</p>}
-      {stage >= 5 && <NavLink to="/">{t("goToMainpage")}</NavLink>}
       {stage === -1 && <p>{t("collectionsAlreadyExist")}</p>}
+      {(stage >= 5 || stage === -1) && (
+        <NavLink to="/">{t("goToMainpage")}</NavLink>
+      )}
     </div>
   );
 };
