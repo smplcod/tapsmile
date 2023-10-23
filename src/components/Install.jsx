@@ -1,18 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { collection, addDoc } from "@firebase/firestore";
-import { db } from "../helpers/FirebaseConfig"; // Импорт из твоего конфига
+import { collection, addDoc, getDocs } from "@firebase/firestore";
+import { db } from "../helpers/FirebaseConfig";
 
 const Install = () => {
   const [stage, setStage] = useState(0);
   const { t } = useTranslation();
 
+  const userRef = collection(db, "Users");
+  const pollsRef = collection(db, "Polls");
+
+  const checkCollectionsExistence = async () => {
+    const usersSnap = await getDocs(userRef);
+    const pollsSnap = await getDocs(pollsRef);
+    return usersSnap.docs.length > 0 && pollsSnap.docs.length > 0;
+  };
+
   const createInitialCollections = async () => {
-    console.log("Stage 1: Starting to create initial collections");
+    const collectionsExist = await checkCollectionsExistence();
+    if (collectionsExist) {
+      setStage(5);
+      return;
+    }
+
     setStage(1);
 
-    const userRef = collection(db, "Users");
     await addDoc(userRef, {
       email: "example@example.com",
       totalPoints: 0,
@@ -20,14 +33,12 @@ const Install = () => {
       createdPolls: 0,
     })
       .then(() => {
-        console.log("Stage 2: Users collection created");
         setStage(2);
       })
       .catch((error) => {
-        console.log("Error creating users collection:", error);
+        console.error("Error creating users collection:", error);
       });
 
-    const pollsRef = collection(db, "Polls");
     await addDoc(pollsRef, {
       question: "Example question",
       options: ["Option1", "Option2"],
@@ -36,26 +47,27 @@ const Install = () => {
       createdById: "someUserId",
     })
       .then(() => {
-        console.log("Stage 3: Polls collection created");
         setStage(3);
       })
       .catch((error) => {
-        console.log("Error creating polls collection:", error);
+        console.error("Error creating polls collection:", error);
       });
 
-    console.log("Stage 4: Done with all collections");
     setStage(4);
   };
 
   return (
     <div>
-      <h1>{t("instalation")}</h1>
-      <p>{stage >= 1 ? t("creatingInitialCollections") : ""}</p>
-      <p>{stage >= 2 ? t("creatingInitialCollectionsDone") : ""}</p>
-      <p>{stage >= 3 ? t("creatingPolls") : ""}</p>
-      <p>{stage >= 4 ? t("creatingPollsDone") : ""}</p>
+      <h1>{t("installation")}</h1>
+      {stage === 0 && (
+        <button onClick={createInitialCollections}>{t("begin")}</button>
+      )}
+      {stage === 1 && <p>{t("creatingInitialCollections")}</p>}
+      {stage === 2 && <p>{t("creatingInitialCollectionsDone")}</p>}
+      {stage === 3 && <p>{t("creatingPolls")}</p>}
+      {stage === 4 && <p>{t("creatingPollsDone")}</p>}
+      {stage === 5 && <p>{t("collectionsAlreadyExist")}</p>}
       {stage === 4 && <NavLink to="/">{t("goToMainpage")}</NavLink>}
-      <button onClick={createInitialCollections}>{t("begin")}</button>
     </div>
   );
 };
