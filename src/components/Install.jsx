@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { collection, addDoc, getDocs } from "@firebase/firestore";
@@ -20,40 +20,34 @@ const Install = () => {
   const createInitialCollections = async () => {
     const collectionsExist = await checkCollectionsExistence();
     if (collectionsExist) {
-      setStage(5);
+      setStage(-1);
       return;
     }
 
     setStage(1);
-
-    await addDoc(userRef, {
-      email: "example@example.com",
-      totalPoints: 0,
-      usedPoints: 0,
-      createdPolls: 0,
-    })
-      .then(() => {
-        setStage(2);
-      })
-      .catch((error) => {
-        console.error("Error creating users collection:", error);
+    try {
+      await addDoc(userRef, {
+        email: "example@example.com",
+        totalPoints: 0,
+        usedPoints: 0,
+        createdPolls: 0,
       });
+      setStage(2);
 
-    await addDoc(pollsRef, {
-      question: "Example question",
-      options: ["Option1", "Option2"],
-      votes: { 0: 0, 1: 0 },
-      status: "premoderation",
-      createdById: "someUserId",
-    })
-      .then(() => {
-        setStage(3);
-      })
-      .catch((error) => {
-        console.error("Error creating polls collection:", error);
+      setStage(3);
+      await addDoc(pollsRef, {
+        question: "Example question",
+        options: ["Option1", "Option2"],
+        votes: { 0: 0, 1: 0 },
+        status: "premoderation",
+        createdById: "someUserId",
       });
+      setStage(4);
 
-    setStage(4);
+      setStage(5);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
@@ -62,12 +56,12 @@ const Install = () => {
       {stage === 0 && (
         <button onClick={createInitialCollections}>{t("begin")}</button>
       )}
-      {stage === 1 && <p>{t("creatingInitialCollections")}</p>}
-      {stage === 2 && <p>{t("creatingInitialCollectionsDone")}</p>}
-      {stage === 3 && <p>{t("creatingPolls")}</p>}
-      {stage === 4 && <p>{t("creatingPollsDone")}</p>}
-      {stage === 5 && <p>{t("collectionsAlreadyExist")}</p>}
-      {stage === 4 && <NavLink to="/">{t("goToMainpage")}</NavLink>}
+      {stage >= 1 && <p>{t("creatingInitialCollections")}</p>}
+      {stage >= 2 && <p>{t("creatingInitialCollectionsDone")}</p>}
+      {stage >= 3 && <p>{t("creatingPolls")}</p>}
+      {stage >= 4 && <p>{t("creatingPollsDone")}</p>}
+      {stage >= 5 && <NavLink to="/">{t("goToMainpage")}</NavLink>}
+      {stage === -1 && <p>{t("collectionsAlreadyExist")}</p>}
     </div>
   );
 };

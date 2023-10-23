@@ -9,10 +9,9 @@ function InstallPage({ user, isLoading }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  // Проверка авторизации
   React.useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
-      if (!currentUser) navigate("/auth"); // если пользователь не авторизован, перенаправляем на страницу авторизации
+      if (!currentUser) navigate("/auth");
     });
   }, [navigate]);
 
