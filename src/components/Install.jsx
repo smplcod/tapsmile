@@ -16,6 +16,33 @@ const PLAN = {
   ALREADY_EXISTS: -1,
 };
 
+const createInitialUsers = async (userRef) => {
+  await addDoc(userRef, {
+    email: "example@example.com",
+    totalPoints: 0,
+    usedPoints: 0,
+    createdPolls: 0,
+  });
+};
+
+const createInitialPolls = async (pollsRef) => {
+  await addDoc(pollsRef, {
+    question: "Example question",
+    options: ["Option1", "Option2"],
+    votes: { 0: 0, 1: 0 },
+    status: "premoderation",
+    createdById: "someUserId",
+  });
+};
+
+const createInitialReferrals = async (referralsRef) => {
+  await addDoc(referralsRef, {
+    code: "example-code",
+    createdBy: "exampleUserId",
+    usersJoined: [],
+  });
+};
+
 const Install = () => {
   const [FACT, setFACT] = useState({
     stage: PLAN.INITIAL,
@@ -48,30 +75,15 @@ const Install = () => {
 
     try {
       setFACT({ stage: PLAN.USERS_CREATING, error: null });
-      await addDoc(userRef, {
-        email: "example@example.com",
-        totalPoints: 0,
-        usedPoints: 0,
-        createdPolls: 0,
-      });
+      await createInitialUsers(userRef);
       setFACT({ stage: PLAN.USERS_DONE, error: null });
 
       setFACT({ stage: PLAN.POLLS_CREATING, error: null });
-      await addDoc(pollsRef, {
-        question: "Example question",
-        options: ["Option1", "Option2"],
-        votes: { 0: 0, 1: 0 },
-        status: "premoderation",
-        createdById: "someUserId",
-      });
+      await createInitialPolls(pollsRef);
       setFACT({ stage: PLAN.POLLS_DONE, error: null });
 
       setFACT({ stage: PLAN.REFERRALS_CREATING, error: null });
-      await addDoc(referralsRef, {
-        code: "example-code",
-        createdBy: "exampleUserId",
-        usersJoined: [],
-      });
+      await createInitialReferrals(referralsRef);
       setFACT({ stage: PLAN.REFERRALS_DONE, error: null });
 
       setFACT({ stage: PLAN.COMPLETED, error: null });
