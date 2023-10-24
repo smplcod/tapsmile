@@ -10,9 +10,10 @@ function InstallPage({ user, isLoading }) {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (!currentUser) navigate("/auth");
     });
+    return () => unsubscribe();
   }, [navigate]);
 
   return <Install />;

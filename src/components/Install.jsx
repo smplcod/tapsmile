@@ -1,11 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { collection, addDoc, getDocs } from "@firebase/firestore";
 import { db } from "../helpers/FirebaseConfig";
 
+const PLAN = {
+  INITIAL: 0,
+  USERS_CREATING: 1,
+  USERS_DONE: 2,
+  POLLS_CREATING: 3,
+  POLLS_DONE: 4,
+  COMPLETED: 5,
+  ALREADY_EXISTS: -1,
+};
+
 const Install = () => {
-  const [stage, setStage] = useState(0);
+  const [FACT, setFACT] = useState({
+    stage: PLAN.INITIAL,
+    error: null,
+  });
+
   const { t } = useTranslation();
 
   const userRef = collection(db, "Users");
@@ -17,24 +31,25 @@ const Install = () => {
     return usersSnap.docs.length > 0 && pollsSnap.docs.length > 0;
   };
 
-  const createInitialCollections = async () => {
+  const createInitialCollections = useCallback(async () => {
     const collectionsExist = await checkCollectionsExistence();
     if (collectionsExist) {
-      setStage(-1);
+      setFACT({ stage: PLAN.ALREADY_EXISTS, error: null });
       return;
     }
 
-    setStage(1);
     try {
+      setFACT({ stage: PLAN.USERS_CREATING, error: null });
       await addDoc(userRef, {
         email: "example@example.com",
         totalPoints: 0,
         usedPoints: 0,
         createdPolls: 0,
       });
-      setStage(2);
 
-      setStage(3);
+      setFACT({ stage: PLAN.USERS_DONE, error: null });
+
+      setFACT({ stage: PLAN.POLLS_CREATING, error: null });
       await addDoc(pollsRef, {
         question: "Example question",
         options: ["Option1", "Option2"],
@@ -42,28 +57,35 @@ const Install = () => {
         status: "premoderation",
         createdById: "someUserId",
       });
-      setStage(4);
 
-      setStage(5);
+      setFACT({ stage: PLAN.COMPLETED, error: null });
     } catch (error) {
-      console.error("Error:", error);
+      setFACT({ stage: FACT.stage, error: error.message });
     }
-  };
+  }, [userRef, pollsRef]);
 
   return (
     <div>
       <h1>{t("installation")}</h1>
-      {stage === 0 && (
+      {FACT.stage === PLAN.INITIAL && (
         <button onClick={createInitialCollections}>{t("begin")}</button>
       )}
-      {stage >= 1 && <p>{t("creatingInitialCollections")}</p>}
-      {stage >= 2 && <p>{t("creatingInitialCollectionsDone")}</p>}
-      {stage >= 3 && <p>{t("creatingPolls")}</p>}
-      {stage >= 4 && <p>{t("creatingPollsDone")}</p>}
-      {stage === -1 && <p>{t("collectionsAlreadyExist")}</p>}
-      {(stage >= 5 || stage === -1) && (
+      {FACT.stage >= PLAN.USERS_CREATING && (
+        <p>{t("creatingInitialCollections")}</p>
+      )}
+      {FACT.stage >= PLAN.USERS_DONE && (
+        <p>{t("creatingInitialCollectionsDone")}</p>
+      )}
+      {FACT.stage >= PLAN.POLLS_CREATING && <p>{t("creatingPolls")}</p>}
+      {FACT.stage >= PLAN.POLLS_DONE && <p>{t("creatingPollsDone")}</p>}
+      {FACT.stage === PLAN.ALREADY_EXISTS && (
+        <p>{t("collectionsAlreadyExist")}</p>
+      )}
+      {(FACT.stage === PLAN.COMPLETED ||
+        FACT.stage === PLAN.ALREADY_EXISTS) && (
         <NavLink to="/">{t("goToMainpage")}</NavLink>
       )}
+      {FACT.error && <p>{FACT.error}</p>}
     </div>
   );
 };
