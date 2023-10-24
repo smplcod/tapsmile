@@ -1,14 +1,25 @@
 {
+	"-----Install-----": "------",
   "installation": "Установка",
-  "creatingInitialCollections": "Создание начальных коллекций...",
-  "creatingInitialCollectionsDone": "Начальные коллекции созданы.",
-  "creatingPolls": "Создание опросов...",
-  "creatingPollsDone": "Опросы созданы.",
-  "collectionsAlreadyExist": "Коллекции уже существуют. Все в порядке.",
+  "begin": "Начать установку",
+
+  "creatingInitialCollections": "Создание таблицы пользователей...",
+  "creatingInitialCollectionsDone": "Таблица пользователей создана.",
+
+  "creatingPolls": "Создание таблицы опросов...",
+  "creatingPollsDone": "Таблица опросов создана.",
+	
+	"creatingReferrals": "Создание таблицы рефералов...",
+	"creatingReferralsDone": "Таблица рефералов создана.",
+  
+	"collectionsAlreadyExist": "Коллекции уже существуют. Все в порядке.",
   "goToMainpage": "Перейти на главную страницу",
+
+	"-----MainPage-----": "------",
   "instantVoting": "Моментальное голосование",
   "thisService": "Этот сервис позволяет моментально",
-  "begin": "Начать установку",
+	
+	"-----AuthPage-----": "------",
   "or": "или",
   "signIn": "Войти",
   "signUp": "Зарегистироваться",

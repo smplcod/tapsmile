@@ -1,14 +1,26 @@
 {
+	"-----Install-----": "------",
   "installation": "Installation",
-  "creatingInitialCollections": "Creating initial collections...",
-  "creatingInitialCollectionsDone": "Initial collections created.",
-  "creatingPolls": "Creating polls...",
+  "begin": "Start Install",
+
+  "creatingInitialCollections": "Creating users table...",
+  "creatingInitialCollectionsDone": "Users table created.",
+  
+	"creatingPolls": "Creating polls...",
   "creatingPollsDone": "Polls created.",
-  "collectionsAlreadyExist": "Collections already exist. Everything is in order.",
+	
+	"creatingReferrals": "Creating referrals table...",
+	"creatingReferralsDone": "Referrals table created.",
+  
+	"collectionsAlreadyExist": "Collections already exist. Everything is in order.",
   "goToMainpage": "Go to the main page",
+	"instalationCompleted": "Instalation completed",
+
+	"-----MainPage-----": "------",
   "instantVoting": "Instant Voting",
   "thisService": "This service allows for instant",
-  "begin": "Start Install",
+
+	"-----AuthPage-----": "------",
   "or": "or",
   "signIn": "Sign In",
   "signUp": "Sign Up",

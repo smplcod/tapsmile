@@ -10,7 +10,9 @@ const PLAN = {
   USERS_DONE: 2,
   POLLS_CREATING: 3,
   POLLS_DONE: 4,
-  COMPLETED: 5,
+  REFERRALS_CREATING: 5,
+  REFERRALS_DONE: 6,
+  COMPLETED: 7,
   ALREADY_EXISTS: -1,
 };
 
@@ -24,11 +26,17 @@ const Install = () => {
 
   const userRef = collection(db, "Users");
   const pollsRef = collection(db, "Polls");
+  const referralsRef = collection(db, "Referrals");
 
   const checkCollectionsExistence = async () => {
     const usersSnap = await getDocs(userRef);
     const pollsSnap = await getDocs(pollsRef);
-    return usersSnap.docs.length > 0 && pollsSnap.docs.length > 0;
+    const referralsSnap = await getDocs(referralsRef);
+    return (
+      usersSnap.docs.length > 0 &&
+      pollsSnap.docs.length > 0 &&
+      referralsSnap.docs.length > 0
+    );
   };
 
   const createInitialCollections = useCallback(async () => {
@@ -46,7 +54,6 @@ const Install = () => {
         usedPoints: 0,
         createdPolls: 0,
       });
-
       setFACT({ stage: PLAN.USERS_DONE, error: null });
 
       setFACT({ stage: PLAN.POLLS_CREATING, error: null });
@@ -57,12 +64,21 @@ const Install = () => {
         status: "premoderation",
         createdById: "someUserId",
       });
+      setFACT({ stage: PLAN.POLLS_DONE, error: null });
+
+      setFACT({ stage: PLAN.REFERRALS_CREATING, error: null });
+      await addDoc(referralsRef, {
+        code: "example-code",
+        createdBy: "exampleUserId",
+        usersJoined: [],
+      });
+      setFACT({ stage: PLAN.REFERRALS_DONE, error: null });
 
       setFACT({ stage: PLAN.COMPLETED, error: null });
     } catch (error) {
       setFACT({ stage: FACT.stage, error: error.message });
     }
-  }, [userRef, pollsRef]);
+  }, [userRef, pollsRef, referralsRef]);
 
   return (
     <div>
@@ -78,6 +94,9 @@ const Install = () => {
       )}
       {FACT.stage >= PLAN.POLLS_CREATING && <p>{t("creatingPolls")}</p>}
       {FACT.stage >= PLAN.POLLS_DONE && <p>{t("creatingPollsDone")}</p>}
+      {FACT.stage >= PLAN.REFERRALS_CREATING && <p>{t("creatingReferrals")}</p>}
+      {FACT.stage >= PLAN.REFERRALS_DONE && <p>{t("creatingReferralsDone")}</p>}
+      {FACT.stage >= PLAN.COMPLETED && <p>{t("instalationCompleted")}</p>}
       {FACT.stage === PLAN.ALREADY_EXISTS && (
         <p>{t("collectionsAlreadyExist")}</p>
       )}
