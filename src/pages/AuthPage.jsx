@@ -9,8 +9,10 @@ import {
 } from "firebase/auth";
 import { auth, signInWithGoogle } from "../helpers/FirebaseConfig";
 import UserGreeting from "../components/UserGreeting";
-import "../components/GoogleButton.class.css";
+import LoginForm from "../components/LoginForm";
+import RegisterForm from "../components/RegisterForm";
 import GoogleButton from "../components/GoogleButton";
+import "../components/GoogleButton.class.css";
 
 const firebaseErrorCodes = {
   "auth/invalid-email": "invalidEmail",
@@ -97,29 +99,17 @@ function AuthPage() {
         />
       ) : (
         <>
-          <div>
-            <input
-              placeholder={t("email")}
-              onChange={(e) => setLoginEmail(e.target.value)}
-            />
-            <input
-              placeholder={t("password")}
-              onChange={(e) => setLoginPassword(e.target.value)}
-            />
-            <button onClick={handleLogin}>{t("signIn")}</button>
-          </div>
+          <LoginForm
+            onLogin={handleLogin}
+            setLoginEmail={setLoginEmail}
+            setLoginPassword={setLoginPassword}
+          />
           {t("or")}
-          <div>
-            <input
-              placeholder={t("email")}
-              onChange={(e) => setRegisterEmail(e.target.value)}
-            />
-            <input
-              placeholder={t("password")}
-              onChange={(e) => setRegisterPassword(e.target.value)}
-            />
-            <button onClick={handleRegister}>{t("signUp")}</button>
-          </div>
+          <RegisterForm
+            onRegister={handleRegister}
+            setRegisterEmail={setRegisterEmail}
+            setRegisterPassword={setRegisterPassword}
+          />
           {t("or")}
           <div>
             <GoogleButton signInWithGoogle={() => signInWithGoogle(navigate)} />
