@@ -102,8 +102,7 @@ function AuthPage() {
             {t("or")}
             <div>
               <GoogleButton
-                signInWithGoogle={signInWithGoogle}
-                navigate={navigate}
+                signInWithGoogle={() => signInWithGoogle(navigate)}
               />
             </div>
           </>
