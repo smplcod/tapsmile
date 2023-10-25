@@ -1,26 +1,20 @@
 {
-	"-----Install-----": "------",
+  "-----Install-----": "------",
   "installation": "Installation",
   "begin": "Start Install",
-
   "creatingInitialCollections": "Creating users table...",
   "creatingInitialCollectionsDone": "Users table created.",
-  
-	"creatingPolls": "Creating polls...",
+  "creatingPolls": "Creating polls...",
   "creatingPollsDone": "Polls created.",
-	
-	"creatingReferrals": "Creating referrals table...",
-	"creatingReferralsDone": "Referrals table created.",
-  
-	"collectionsAlreadyExist": "Collections already exist. Everything is in order.",
-	"instalationCompleted": "Instalation completed",
+  "creatingReferrals": "Creating referrals table...",
+  "creatingReferralsDone": "Referrals table created.",
+  "collectionsAlreadyExist": "Collections already exist. Everything is in order.",
+  "instalationCompleted": "Instalation completed",
   "goToMainpage": "Go to the main page",
-
-	"-----MainPage-----": "------",
+  "-----MainPage-----": "------",
   "instantVoting": "Instant Voting",
   "thisService": "This service allows for instant",
-
-	"-----AuthPage-----": "------",
+  "-----AuthPage-----": "------",
   "or": "or",
   "signIn": "Sign In",
   "signUp": "Sign Up",
@@ -29,5 +23,8 @@
   "email": "E-mail",
   "password": "Password",
   "hello": "Hello",
-  "youAreReadyToPolls": "You are ready to polls"
+  "youAreReadyToPolls": "You are ready to polls",
+  "errorLogin": "Error while logging in: ",
+  "errorRegistration": "Error during registration: ",
+  "errorLogout": "Error logging out: "
 }
