@@ -26,5 +26,14 @@
   "youAreReadyToPolls": "Вы готовы к опросам",
   "errorLogin": "Ошибка при входе: ",
   "errorRegistration": "Ошибка при регистрации: ",
-  "errorLogout": "Ошибка при выходе: "
+  "errorLogout": "Ошибка при выходе: ",
+  "----FirebaseErrors-----": "------",
+  "invalidEmail": "Неверный формат электронной почты.",
+  "userDisabled": "Учетная запись пользователя отключена.",
+  "userNotFound": "Пользователь не найден.",
+  "wrongPassword": "Неверный пароль.",
+  "emailAlreadyInUse": "Этот адрес электронной почты уже используется.",
+  "operationNotAllowed": "Операция не разрешена.",
+  "weakPassword": "Слишком слабый пароль.",
+  "unknownError": "Произошла неизвестная ошибка."
 }

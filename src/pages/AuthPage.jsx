@@ -12,6 +12,20 @@ import UserGreeting from "../components/UserGreeting";
 import "../components/GoogleButton.class.css";
 import GoogleButton from "../components/GoogleButton";
 
+const firebaseErrorCodes = {
+  "auth/invalid-email": "invalidEmail",
+  "auth/user-disabled": "userDisabled",
+  "auth/user-not-found": "userNotFound",
+  "auth/wrong-password": "wrongPassword",
+  "auth/email-already-in-use": "emailAlreadyInUse",
+  "auth/operation-not-allowed": "operationNotAllowed",
+  "auth/weak-password": "weakPassword",
+};
+
+function getTranslationKeyForFirebaseError(errorCode) {
+  return firebaseErrorCodes[errorCode] || "unknownError";
+}
+
 function AuthPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -46,7 +60,7 @@ function AuthPage() {
       );
       navigate("/");
     } catch (err) {
-      setError(t("errorRegistration") + err.message);
+      setError(t(getTranslationKeyForFirebaseError(err.code)));
     }
   };
 
@@ -55,7 +69,7 @@ function AuthPage() {
       await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
       navigate("/");
     } catch (err) {
-      setError(t("errorLogin") + err.message);
+      setError(t(getTranslationKeyForFirebaseError(err.code)));
     }
   };
 
@@ -67,7 +81,7 @@ function AuthPage() {
       localStorage.removeItem("image");
       setProfileImage(null);
     } catch (err) {
-      setError(t("errorLogout") + err.message);
+      setError(t(getTranslationKeyForFirebaseError(err.code)));
     }
   };
 

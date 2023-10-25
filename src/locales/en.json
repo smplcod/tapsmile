@@ -26,5 +26,14 @@
   "youAreReadyToPolls": "You are ready to polls",
   "errorLogin": "Error while logging in: ",
   "errorRegistration": "Error during registration: ",
-  "errorLogout": "Error logging out: "
+  "errorLogout": "Error logging out: ",
+  "----FirebaseErrors-----": "------",
+  "invalidEmail": "Invalid email format.",
+  "userDisabled": "This user account has been disabled.",
+  "userNotFound": "User not found.",
+  "wrongPassword": "Wrong password.",
+  "emailAlreadyInUse": "The email address is already in use.",
+  "operationNotAllowed": "Operation not allowed.",
+  "weakPassword": "The password is too weak.",
+  "unknownError": "An unknown error occurred."
 }
