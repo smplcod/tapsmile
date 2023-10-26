@@ -94,8 +94,6 @@ const Install = ({ user }) => {
   }, [userRef, pollsRef, referralsRef]);
 
   const isAdmin = user && user.email === process.env.REACT_APP_ADMIN_EMAIL;
-  console.log("Текущий пользователь:", user?.email);
-  console.log("Админский email:", process.env.REACT_APP_ADMIN_EMAIL);
 
   React.useEffect(() => {
     if (user) {
