@@ -9,6 +9,8 @@
   "creatingPollsDone": "Таблица опросов создана.",
   "creatingReferrals": "Создание таблицы рефералов...",
   "creatingReferralsDone": "Таблица рефералов создана.",
+  "creatingUserVotes": "Создание таблицы голосов пользователей...",
+  "creatingUserVotesDone": "Таблица голосов пользователей создана.",
   "collectionsAlreadyExist": "Коллекции уже существуют. Все в порядке.",
   "instalationCompleted": "Установка успешно завершена",
   "goToMainpage": "Перейти на главную страницу",

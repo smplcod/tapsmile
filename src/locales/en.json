@@ -9,6 +9,8 @@
   "creatingPollsDone": "Polls created.",
   "creatingReferrals": "Creating referrals table...",
   "creatingReferralsDone": "Referrals table created.",
+  "creatingUserVotes": "Creating user votes table...",
+  "creatingUserVotesDone": "User votes table created.",
   "collectionsAlreadyExist": "Collections already exist. Everything is in order.",
   "instalationCompleted": "Instalation completed",
   "goToMainpage": "Go to the main page",
