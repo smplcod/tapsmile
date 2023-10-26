@@ -1,9 +1,16 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const UserGreeting = ({ user, logout, profileImage }) => {
+  const { t } = useTranslation();
+
+  if (!user) return null;
+
+  const isAdmin = user.email === process.env.REACT_APP_ADMIN_EMAIL;
+
   return (
     <div>
-      Привет,{" "}
+      {t("hello")}{" "}
       {profileImage && (
         <img
           src={profileImage}
@@ -16,8 +23,9 @@ const UserGreeting = ({ user, logout, profileImage }) => {
           }}
         />
       )}
-      {user.email.split("@")[0]}&nbsp;
-      <button onClick={logout}>Выйти</button>
+      {user.email.split("@")[0]}
+      {isAdmin && ` ${t("admin")}`} &nbsp;
+      <button onClick={logout}>{t("logOut")}</button>
     </div>
   );
 };

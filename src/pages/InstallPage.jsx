@@ -4,8 +4,9 @@ import Install from "../components/Install";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../helpers/FirebaseConfig";
+import UserGreeting from "../components/UserGreeting";
 
-function InstallPage({ user, isLoading }) {
+function InstallPage({ user, isLoading, logout, profileImage }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -16,7 +17,12 @@ function InstallPage({ user, isLoading }) {
     return () => unsubscribe();
   }, [navigate]);
 
-  return <Install />;
+  return (
+    <div>
+      <UserGreeting user={user} logout={logout} profileImage={profileImage} />
+      <Install user={user} />
+    </div>
+  );
 }
 
 export default InstallPage;

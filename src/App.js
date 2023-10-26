@@ -8,7 +8,7 @@ import ruTranslations from "./locales/ru.json";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 
 import { useState, useEffect } from "react";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./helpers/FirebaseConfig";
 
 i18n.use(initReactI18next).init({
@@ -30,18 +30,40 @@ i18n.use(initReactI18next).init({
 function App() {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [profileImage, setProfileImage] = useState(null);
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setIsLoading(false);
+      const storedImage = localStorage.getItem("image");
+      if (storedImage) {
+        setProfileImage(storedImage);
+      }
     });
   }, []);
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      localStorage.removeItem("name");
+      localStorage.removeItem("email");
+      localStorage.removeItem("image");
+      setProfileImage(null);
+    } catch (err) {
+      console.error("Error during logout:", err);
+    }
+  };
 
   return (
     <>
       <LanguageSwitcher />
-      <Router user={user} isLoading={isLoading} />
+      <Router
+        user={user}
+        isLoading={isLoading}
+        logout={handleLogout}
+        profileImage={profileImage}
+      />
     </>
   );
 }

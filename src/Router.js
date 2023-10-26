@@ -4,7 +4,7 @@ import MainPage from "./pages/MainPage";
 import AuthPage from "./pages/AuthPage";
 import InstallPage from "./pages/InstallPage";
 
-function Router({ user, isLoading }) {
+function Router({ user, isLoading, logout, profileImage }) {
   return (
     <BrowserRouter>
       <Routes>
@@ -12,8 +12,28 @@ function Router({ user, isLoading }) {
           path="/"
           element={<MainPage user={user} isLoading={isLoading} />}
         />
-        <Route path="/auth" element={<AuthPage />} />
-        <Route path="/install" element={<InstallPage />} />
+        <Route
+          path="/auth"
+          element={
+            <AuthPage
+              user={user}
+              isLoading={isLoading}
+              logout={logout}
+              profileImage={profileImage}
+            />
+          }
+        />
+        <Route
+          path="/install"
+          element={
+            <InstallPage
+              user={user}
+              isLoading={isLoading}
+              logout={logout}
+              profileImage={profileImage}
+            />
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

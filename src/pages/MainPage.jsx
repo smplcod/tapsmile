@@ -17,9 +17,10 @@ function MainPage({ user, isLoading }) {
 
   return (
     <>
-      {/* <h1>{t("instantVoting")}</h1>
+      <UserGreeting user={user} />
+      <h1>{t("instantVoting")}</h1>
       <p>{t("thisService")}</p>
-      <p>{t("youAreReadyToPolls")}</p> */}
+      <p>{t("youAreReadyToPolls")}</p>
     </>
   );
 }

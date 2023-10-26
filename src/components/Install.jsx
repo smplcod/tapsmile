@@ -43,11 +43,12 @@ const createInitialReferrals = async (referralsRef) => {
   });
 };
 
-const Install = () => {
+const Install = ({ user }) => {
   const [FACT, setFACT] = useState({
     stage: PLAN.INITIAL,
     error: null,
   });
+  const [isUserLoading, setIsUserLoading] = useState(true);
 
   const { t } = useTranslation();
 
@@ -92,11 +93,24 @@ const Install = () => {
     }
   }, [userRef, pollsRef, referralsRef]);
 
+  const isAdmin = user && user.email === process.env.REACT_APP_ADMIN_EMAIL;
+  console.log("Текущий пользователь:", user?.email);
+  console.log("Админский email:", process.env.REACT_APP_ADMIN_EMAIL);
+
+  React.useEffect(() => {
+    if (user) {
+      setIsUserLoading(false);
+    }
+  }, [user]);
+
   return (
     <div>
       <h1>{t("installation")}</h1>
-      {FACT.stage === PLAN.INITIAL && (
+      {!isUserLoading && FACT.stage === PLAN.INITIAL && isAdmin && (
         <button onClick={createInitialCollections}>{t("begin")}</button>
+      )}
+      {!isUserLoading && FACT.stage === PLAN.INITIAL && !isAdmin && (
+        <p>{t("accessDenied")}</p>
       )}
       {FACT.stage >= PLAN.USERS_CREATING && (
         <p>{t("creatingInitialCollections")}</p>
